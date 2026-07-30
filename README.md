@@ -34,6 +34,7 @@ A lightweight VS Code extension that notifies you when Codex responses finish us
 - Optional document-based idle detection fallback.
 - Quiet mode or banner mode for completion notifications.
 - Manual trigger support through `.codex-notify` and `codex-done.ps1`.
+- Remote SSH workspace support: notifications and sounds run locally while relative trigger files are watched on the remote host.
 
 ## Commands
 
@@ -85,6 +86,17 @@ See [INSTALLATION.md](./INSTALLATION.md) for VSIX steps.
    - Contains `error` -> error notification
    - Any other non-empty content -> complete notification
 7. Auto mode watches Codex stream activity and waits for a real end-state signal, so opening or closing chat should not fire by itself.
+
+### Remote SSH Workspaces
+
+Codex Notifier runs in VS Code's local UI extension host, so sounds, status messages, and system notifications are produced on your local computer even when the workspace is opened through Remote SSH. It discovers the Codex extension logs on the SSH host through VS Code's remote file-system API and watches explicit per-conversation completion signals.
+
+The default relative trigger path (`.codex-notify`) is watched through VS Code's remote file-system API. In a multi-root workspace, one trigger is watched in each root. Absolute `watchFilePath` values still refer to the local UI machine; use a relative path to watch a file on the SSH host.
+
+If the local UI extension cannot read the VS Code Server log directory, install
+the optional [`remote-companion`](./remote-companion/) VSIX on the SSH host. It
+watches Codex session JSONL files remotely and forwards authoritative
+`task_complete` events to the local notifier command.
 
 ## Recommended Settings
 
@@ -139,4 +151,3 @@ Notes:
 ## License
 
 MIT. See [LICENSE](./LICENSE).
-

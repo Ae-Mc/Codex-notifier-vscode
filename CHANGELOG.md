@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.9] - 2026-07-30
+
+- Added detailed log-source diagnostics for troubleshooting Remote SSH auto-detection.
+
+## [0.1.8] - 2026-07-30
+
+- Added Remote SSH workspace support by running notifications in the local UI extension host.
+- Switched relative manual-trigger reads to the VS Code file-system API so `.codex-notify` can be watched on remote workspace roots.
+- Added discovery and polling of Codex logs in remote VS Code Server hosts and the current `exthost*` log layout.
+- Matched explicit per-conversation turn-start and completion markers so silence alone no longer triggers or suppresses notifications.
+- Added remote workspace details to diagnostics and documented local versus remote path behavior.
+
 ## [0.1.7] - 2026-07-24
 
 - Added unfocused system notifications so Codex responses can alert you even when VS Code is not the active window.
